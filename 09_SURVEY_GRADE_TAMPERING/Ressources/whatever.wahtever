@@ -1,0 +1,48 @@
+사용자가 점수 조작을 가능하게 한다.
+서버에서 
+
+<form action="#" method="post">
+	<input type="hidden" name="sujet" value="2">
+	<select name="valeur" onchange="javascript:this.form.submit();">
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+		<option value="7">7</option>
+		<option value="8">8</option>
+		<option value="9">9</option>
+		<option value="10">10</option>
+	</select>
+</form>
+
+value="100000000"을 넣고 submit하면 
+THE FLAG IS 03A944B434D5BAFF05F46C4BEDE5792551A2595574BCAFC9A6E25F67C382CCAA
+를 얻을 수 있다.
+
+1. Make the form read-only
+<select name="fruit" id="fruit" readonly 
+        style="background-color:#ababab" 
+        onFocus="this.initialSelect = this.selectedIndex;" 
+        onChange="this.selectedIndex = this.initialSelect;">
+ 
+<form action="#" method="post">
+	<input type="hidden" name="sujet" value="2">
+	<select name="valeur" readonly 
+	onFocus="this.initialSelect = this.selectedIndex;"
+	onchange="this.selectedIndex = this.initialSelect; javascript:this.form.submit();">
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+		<option value="7">7</option>
+		<option value="8">8</option>
+		<option value="9">9</option>
+		<option value="10">10</option>
+	</select>
+</form>
+
+2. 서버에서 값을 정제하고 올바른 값이 들어왔는지 반드시 확인한다.

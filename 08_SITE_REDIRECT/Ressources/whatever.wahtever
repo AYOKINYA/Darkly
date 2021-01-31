@@ -1,0 +1,9 @@
+로그인 후 위조된 사이트로 redirect되면 유저 정보가 털릴 수 있다.
+
+<a href="index.php?page=redirect&amp;site=twitter" class="icon fa-twitter"></a>
+site=aasdasd
+
+GOOD JOB HERE IS THE FLAG : B9E775A0291FED784A2D9680FCFAD7EDD6B8CDF87648DA647AAF4BBA288BCAB3
+
+서버에서 유저를 site로 redirect할 때 올바른 site인지 항상 입력값을 체크해야 한다,
+You need to check that every parameter is valid before redirecting the user to the "site". 

